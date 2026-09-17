@@ -1,0 +1,8 @@
+{
+	"appId": "com.sherlock.finder",
+	"appName": "Sherlock Finder",
+	"webDir": "dist",
+	"server": {
+		"androidScheme": "https"
+	}
+}
