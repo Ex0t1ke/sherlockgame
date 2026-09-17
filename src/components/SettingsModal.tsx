@@ -124,13 +124,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md select-none animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg bg-slate-900 border-2 border-amber-500/50 rounded-3xl p-6 shadow-2xl text-amber-50 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md select-none animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg bg-slate-900 border-2 border-amber-500/50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 shadow-2xl text-amber-50 max-h-[92vh] flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-2.5 sm:pb-4 border-b border-slate-800 shrink-0">
           <div className="flex items-center gap-2">
             <Settings className="w-5 h-5 text-amber-400" />
-            <h3 className="font-serif font-bold text-lg text-amber-200 uppercase tracking-wide">
+            <h3 className="font-serif font-bold text-base sm:text-lg text-amber-200 uppercase tracking-wide">
               Настройки и Сохранения
             </h3>
           </div>
@@ -147,7 +147,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
 
         {/* Tab Buttons */}
-        <div className="flex items-center gap-2 mt-4 pb-2 border-b border-slate-800 text-xs font-semibold">
+        <div className="flex items-center gap-2 mt-2 sm:mt-4 pb-2 border-b border-slate-800 text-xs font-semibold shrink-0">
           <button
             onClick={() => {
               soundEngine.playClick();
@@ -198,7 +198,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         )}
 
         {/* Tab Content */}
-        <div className="mt-4 space-y-4">
+        <div className="mt-3 sm:mt-4 space-y-3 sm:space-y-4 overflow-y-auto flex-1 pr-1">
           {/* TAB 1: 3 LocalStorage Save Slots */}
           {activeTab === 'saves' && (
             <div className="space-y-3">

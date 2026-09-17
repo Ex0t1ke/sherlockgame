@@ -48,13 +48,13 @@ export const DetectiveCasebook: React.FC<DetectiveCasebookProps> = ({
   const handleCaseSelect = onSelectCase || onSelectCaseToReplay || (() => {});
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md select-none animate-in fade-in duration-200">
-      <div className="relative w-full max-w-4xl h-[90vh] max-h-[720px] bg-gradient-to-b from-stone-900 via-stone-900 to-stone-950 border-2 border-amber-600/50 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.9)] flex flex-col text-amber-50 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-slate-950/85 backdrop-blur-md select-none animate-in fade-in duration-200">
+      <div className="relative w-full max-w-4xl h-[94vh] max-h-[720px] bg-gradient-to-b from-stone-900 via-stone-900 to-stone-950 border-2 border-amber-600/50 rounded-2xl sm:rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.9)] flex flex-col text-amber-50 overflow-hidden">
         {/* Vintage Leather Book Header */}
-        <div className="w-full bg-stone-950/90 border-b border-amber-500/30 px-5 py-3.5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <BookOpen className="w-5 h-5 text-amber-400" />
-            <h3 className="font-serif font-bold text-base sm:text-lg tracking-widest text-amber-200 uppercase">
+        <div className="w-full bg-stone-950/90 border-b border-amber-500/30 px-4 py-2 sm:px-5 sm:py-3.5 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+            <h3 className="font-serif font-bold text-sm sm:text-lg tracking-widest text-amber-200 uppercase">
               Дневник Сыщика • Бейкер-стрит, 221B
             </h3>
           </div>
@@ -65,14 +65,14 @@ export const DetectiveCasebook: React.FC<DetectiveCasebookProps> = ({
               onClose();
             }}
             id="btn-close-casebook"
-            className="p-1.5 rounded-full hover:bg-stone-800 text-stone-400 hover:text-white transition-colors cursor-pointer"
+            className="p-1 rounded-full hover:bg-stone-800 text-stone-400 hover:text-white transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 px-6 pt-3 border-b border-stone-800 bg-stone-950/40">
+        <div className="flex items-center gap-2 px-4 pt-1.5 sm:px-6 sm:pt-3 border-b border-stone-800 bg-stone-950/40 shrink-0">
           <button
             onClick={() => {
               soundEngine.playClick();
