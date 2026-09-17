@@ -1,0 +1,6 @@
+{
+  "name": "Sherlock Finder",
+  "description": "Детективная игра в атмосфере нуара: расследуйте дела жителей города, находите потерянные реликвии и раскрывайте тайны в роли Шерлока Холмса.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
