@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Search, Play, FolderArchive, Settings, FileCode2, Sparkles, Music } from 'lucide-react';
+import { Search, Play, FolderArchive, Settings, Sparkles } from 'lucide-react';
 import { soundEngine } from '../audio/soundEngine';
 
 interface MainMenuProps {
@@ -7,7 +7,6 @@ interface MainMenuProps {
   onContinue: () => void;
   onOpenArchive: () => void;
   onOpenSettings: () => void;
-  onOpenAndroidCode: () => void;
   hasSavedGame: boolean;
   completedCount: number;
   totalCount: number;
@@ -18,7 +17,6 @@ export const MainMenu: React.FC<MainMenuProps> = ({
   onContinue,
   onOpenArchive,
   onOpenSettings,
-  onOpenAndroidCode,
   hasSavedGame,
   completedCount,
   totalCount,
@@ -105,21 +103,9 @@ export const MainMenu: React.FC<MainMenuProps> = ({
         <div className="absolute -bottom-10 left-0 right-0 h-40 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent blur-xl pointer-events-none" />
       </div>
 
-      {/* Music ambience prompt badge */}
-      <div className="relative z-10 w-full flex items-center justify-between max-w-xl">
-        <button
-          onClick={() => {
-            soundEngine.startNoirMusic();
-            soundEngine.startRainAmbience();
-          }}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-amber-500/30 text-xs text-amber-200 backdrop-blur-sm transition-colors shadow-lg cursor-pointer"
-          title="Включить нуар-саундтрек и шум дождя"
-        >
-          <Music className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-          <span>Включить нуар-джаз</span>
-        </button>
-
-        <div className="text-xs text-slate-400 bg-slate-900/80 px-2.5 py-1 rounded-full border border-slate-700">
+      {/* Top status bar badge */}
+      <div className="relative z-10 w-full flex items-center justify-end max-w-xl">
+        <div className="text-xs text-slate-300 bg-slate-900/85 px-3 py-1 rounded-full border border-slate-700/80 shadow">
           Раскрыто дел: <span className="text-amber-300 font-bold">{completedCount}/{totalCount}</span>
         </div>
       </div>
@@ -210,80 +196,78 @@ export const MainMenu: React.FC<MainMenuProps> = ({
         <div className="h-[1px] w-48 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent my-3" />
       </div>
 
-      {/* Main Navigation Menu Buttons */}
-      <div className="relative z-10 flex flex-col gap-3 w-full max-w-xs mb-4">
-        {/* Continue Button (if existing game) */}
-        {hasSavedGame && (
+      {/* Main Navigation Menu Buttons - Clean & Uncluttered */}
+      <div className="relative z-10 flex flex-col gap-2.5 w-full max-w-xs mb-3">
+        {/* Primary Action Button */}
+        {hasSavedGame ? (
+          <>
+            <button
+              onClick={() => {
+                soundEngine.playClick();
+                soundEngine.startNoirMusic();
+                onContinue();
+              }}
+              id="menu-btn-continue"
+              className="group w-full py-3 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-bold tracking-wider text-sm flex items-center justify-center gap-2.5 shadow-[0_4px_18px_rgba(245,158,11,0.4)] border border-amber-300 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            >
+              <Play className="w-4 h-4 fill-stone-950" />
+              <span>ПРОДОЛЖИТЬ ДЕЛО</span>
+            </button>
+
+            <button
+              onClick={() => {
+                soundEngine.playClick();
+                soundEngine.startNoirMusic();
+                onNewGame();
+              }}
+              id="menu-btn-new-case"
+              className="w-full py-2.5 px-6 rounded-xl bg-stone-900/90 hover:bg-stone-800 text-amber-200 border border-amber-500/40 tracking-wider text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>КАРТА ГОРОДА (ДЕЛА)</span>
+            </button>
+          </>
+        ) : (
           <button
             onClick={() => {
               soundEngine.playClick();
               soundEngine.startNoirMusic();
-              onContinue();
+              onNewGame();
             }}
-            id="menu-btn-continue"
-            className="group w-full py-3 px-6 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-bold tracking-wider text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(217,119,6,0.4)] border border-amber-400 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            id="menu-btn-start"
+            className="group w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-bold tracking-wider text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(245,158,11,0.45)] border border-amber-300 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
-            <Play className="w-4 h-4 fill-slate-950" />
-            <span>ПРОДОЛЖИТЬ ДЕЛО</span>
+            <Play className="w-4 h-4 fill-stone-950" />
+            <span>НАЧАТЬ РАССЛЕДОВАНИЕ</span>
           </button>
         )}
 
-        {/* New Case Button */}
-        <button
-          onClick={() => {
-            soundEngine.playClick();
-            soundEngine.startNoirMusic();
-            onNewGame();
-          }}
-          id="menu-btn-new-case"
-          className={`group w-full py-3 px-6 rounded-xl ${
-            hasSavedGame
-              ? 'bg-slate-900/90 hover:bg-slate-800 text-amber-200 border border-amber-500/40'
-              : 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-bold shadow-[0_4px_20px_rgba(217,119,6,0.4)] border border-amber-400'
-          } tracking-wider text-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md cursor-pointer`}
-        >
-          <Sparkles className="w-4 h-4 text-amber-400" />
-          <span>НОВОЕ ДЕЛО (КАРТА ГОРОДА)</span>
-        </button>
+        {/* Secondary Row: Archive & Settings */}
+        <div className="grid grid-cols-2 gap-2 w-full">
+          <button
+            onClick={() => {
+              soundEngine.playClick();
+              onOpenArchive();
+            }}
+            id="menu-btn-archive"
+            className="py-2.5 px-3 rounded-xl bg-stone-900/80 hover:bg-stone-800/90 text-amber-100/90 border border-stone-700/80 hover:border-amber-500/40 text-xs font-medium flex items-center justify-center gap-1.5 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+          >
+            <FolderArchive className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span>АРХИВ ({completedCount})</span>
+          </button>
 
-        {/* Case Archive */}
-        <button
-          onClick={() => {
-            soundEngine.playClick();
-            onOpenArchive();
-          }}
-          id="menu-btn-archive"
-          className="w-full py-2.5 px-6 rounded-xl bg-slate-900/80 hover:bg-slate-800/90 text-amber-100/90 border border-slate-700/80 hover:border-amber-500/40 tracking-wider text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-sm cursor-pointer"
-        >
-          <FolderArchive className="w-4 h-4 text-amber-400" />
-          <span>АРХИВ ДЕЛ ({completedCount} раскрыто)</span>
-        </button>
-
-        {/* Settings & Save Slots */}
-        <button
-          onClick={() => {
-            soundEngine.playClick();
-            onOpenSettings();
-          }}
-          id="menu-btn-settings"
-          className="w-full py-2.5 px-6 rounded-xl bg-slate-900/80 hover:bg-slate-800/90 text-slate-300 border border-slate-700/80 hover:border-amber-500/40 tracking-wider text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
-        >
-          <Settings className="w-4 h-4 text-slate-400" />
-          <span>НАСТРОЙКИ И СОХРАНЕНИЯ</span>
-        </button>
-
-        {/* Android Kotlin Source Code & Studio Export */}
-        <button
-          onClick={() => {
-            soundEngine.playClick();
-            onOpenAndroidCode();
-          }}
-          id="menu-btn-android-export"
-          className="w-full py-2.5 px-6 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/70 text-emerald-300 border border-emerald-500/50 tracking-wider text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] shadow-sm cursor-pointer"
-        >
-          <FileCode2 className="w-4 h-4 text-emerald-400" />
-          <span>ПРОЕКТ ANDROID (KOTLIN)</span>
-        </button>
+          <button
+            onClick={() => {
+              soundEngine.playClick();
+              onOpenSettings();
+            }}
+            id="menu-btn-settings"
+            className="py-2.5 px-3 rounded-xl bg-stone-900/80 hover:bg-stone-800/90 text-stone-300 border border-stone-700/80 hover:border-amber-500/40 text-xs font-medium flex items-center justify-center gap-1.5 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+          >
+            <Settings className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+            <span>НАСТРОЙКИ</span>
+          </button>
+        </div>
       </div>
 
       {/* Footer Tagline */}

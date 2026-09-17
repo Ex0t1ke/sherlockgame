@@ -18,8 +18,6 @@ import { HiddenObjectGame } from './components/HiddenObjectGame';
 import { CaseCompletedModal } from './components/CaseCompletedModal';
 import { DetectiveCasebook } from './components/DetectiveCasebook';
 import { SettingsModal } from './components/SettingsModal';
-import { AndroidCodeModal } from './components/AndroidCodeModal';
-import { Wifi, BatteryMedium, Signal } from 'lucide-react';
 
 export default function App() {
   // Screen & Navigation
@@ -64,8 +62,6 @@ export default function App() {
   // Modals & UI Toggles
   const [isNotebookOpen, setIsNotebookOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
-  const [isAndroidCodeOpen, setIsAndroidCodeOpen] = useState<boolean>(false);
-  const [isPhoneFrame, setIsPhoneFrame] = useState<boolean>(false);
 
   // Stats from completed case
   const [lastStats, setLastStats] = useState<{
@@ -186,47 +182,26 @@ export default function App() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-slate-950 flex flex-col items-center justify-center p-0 sm:p-4 text-slate-100 font-sans selection:bg-amber-600 selection:text-white">
-      {/* Outer Shell: Either Android Phone Bezel or Fluid Landscape Screen */}
-      <div
-        className={`w-full transition-all duration-300 ${
-          isPhoneFrame
-            ? 'max-w-[420px] h-[92vh] max-h-[860px] rounded-[44px] border-[10px] border-slate-800 shadow-[0_25px_70px_rgba(0,0,0,0.95)] ring-2 ring-slate-700/50 flex flex-col overflow-hidden relative'
-            : 'max-w-7xl h-screen sm:h-[94vh] sm:rounded-3xl border border-slate-800 shadow-2xl flex flex-col overflow-hidden relative'
-        }`}
-      >
-        {/* Android Phone Status Bar (when frame is enabled) */}
-        {isPhoneFrame && (
-          <div className="w-full bg-slate-950 px-6 py-2 flex items-center justify-between text-[11px] text-slate-400 font-medium z-50 select-none border-b border-slate-900">
-            <span>22:10</span>
-            {/* Camera Punch Hole */}
-            <div className="w-4 h-4 rounded-full bg-black border border-slate-800" />
-            <div className="flex items-center gap-1.5">
-              <Signal className="w-3 h-3" />
-              <Wifi className="w-3 h-3" />
-              <BatteryMedium className="w-3.5 h-3.5 text-emerald-400" />
-            </div>
-          </div>
+    <div className="w-full min-h-screen bg-slate-950 flex flex-col items-center justify-center p-0 sm:p-2 text-slate-100 font-sans selection:bg-amber-600 selection:text-white">
+      {/* Main Game Viewport */}
+      <div className="w-full max-w-7xl h-screen sm:h-[96vh] sm:rounded-2xl border border-slate-800 shadow-2xl flex flex-col overflow-hidden relative">
+        {/* Global Top Header Bar (Hidden during search screen for Masyanya-style streamlined quest header) */}
+        {screen !== 'search' && (
+          <HeaderBar
+            rank={currentRank}
+            coins={coins}
+            hintsAvailable={hintsAvailable}
+            maxHints={maxHints}
+            timeOfDay={timeOfDay}
+            onTimeOfDayChange={setTimeOfDay}
+            isMuted={isMuted}
+            onToggleMute={handleToggleMute}
+            onOpenNotebook={() => setIsNotebookOpen(true)}
+            onOpenSettings={() => setIsSettingsOpen(true)}
+            onGoToMap={() => setScreen('map')}
+            currentScreen={screen}
+          />
         )}
-
-        {/* Global Top Header Bar */}
-        <HeaderBar
-          rank={currentRank}
-          coins={coins}
-          hintsAvailable={hintsAvailable}
-          maxHints={maxHints}
-          timeOfDay={timeOfDay}
-          onTimeOfDayChange={setTimeOfDay}
-          isMuted={isMuted}
-          onToggleMute={handleToggleMute}
-          onOpenNotebook={() => setIsNotebookOpen(true)}
-          onOpenSettings={() => setIsSettingsOpen(true)}
-          onOpenAndroidCode={() => setIsAndroidCodeOpen(true)}
-          onGoToMap={() => setScreen('map')}
-          currentScreen={screen}
-          isPhoneFrame={isPhoneFrame}
-          onTogglePhoneFrame={() => setIsPhoneFrame(!isPhoneFrame)}
-        />
 
         {/* Dynamic Screen Router */}
         <main className="flex-1 w-full h-full relative overflow-hidden bg-slate-950">
@@ -237,7 +212,6 @@ export default function App() {
               onContinue={() => setScreen('map')}
               onOpenArchive={() => setIsNotebookOpen(true)}
               onOpenSettings={() => setIsSettingsOpen(true)}
-              onOpenAndroidCode={() => setIsAndroidCodeOpen(true)}
               hasSavedGame={safeCompletedCaseIds.length > 0}
               completedCount={safeCompletedCaseIds.length}
               totalCount={CASES_DATA.length}
@@ -303,13 +277,6 @@ export default function App() {
             />
           )}
         </main>
-
-        {/* Android Gesture Bar (when phone frame active) */}
-        {isPhoneFrame && (
-          <div className="w-full bg-slate-950 py-1.5 flex justify-center z-50 border-t border-slate-900">
-            <div className="w-32 h-1 rounded-full bg-slate-600" />
-          </div>
-        )}
       </div>
 
       {/* Casebook Modal */}
@@ -355,11 +322,6 @@ export default function App() {
           isMuted={isMuted}
           onToggleMute={handleToggleMute}
         />
-      )}
-
-      {/* Android Kotlin Source Code & Studio Export Modal */}
-      {isAndroidCodeOpen && (
-        <AndroidCodeModal onClose={() => setIsAndroidCodeOpen(false)} />
       )}
     </div>
   );

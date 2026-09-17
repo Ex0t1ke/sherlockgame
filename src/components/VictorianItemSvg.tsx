@@ -627,6 +627,64 @@ export const VictorianItemSvg: React.FC<VictorianSvgProps> = ({
         </svg>
       );
 
+    case 'sapphire':
+      return (
+        <svg viewBox="0 0 64 64" className={className} fill="none">
+          <defs>
+            <radialGradient id={`sph_deep_${uniqueId}`} cx="38%" cy="32%" r="65%">
+              <stop offset="0%" stopColor="#bfdbfe" />
+              <stop offset="25%" stopColor="#3b82f6" />
+              <stop offset="60%" stopColor="#1d4ed8" />
+              <stop offset="85%" stopColor="#1e3a8a" />
+              <stop offset="100%" stopColor="#0f172a" />
+            </radialGradient>
+            <linearGradient id={`sph_gold_${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#fef08a" />
+              <stop offset="40%" stopColor="#f59e0b" />
+              <stop offset="80%" stopColor="#b45309" />
+              <stop offset="100%" stopColor="#78350f" />
+            </linearGradient>
+            <filter id={`sph_glow_${uniqueId}`} x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#1d4ed8" floodOpacity="0.8" />
+            </filter>
+          </defs>
+
+          {/* Ornate Gold Crown Setting */}
+          <g filter={`url(#sph_glow_${uniqueId})`}>
+            <ellipse cx="32" cy="50" rx="20" ry="8" fill={`url(#sph_gold_${uniqueId})`} stroke="#451a03" strokeWidth="1.5" />
+            <path d="M 12 50 L 16 38 L 24 44 L 32 36 L 40 44 L 48 38 L 52 50 Z" fill={`url(#sph_gold_${uniqueId})`} stroke="#78350f" strokeWidth="1" />
+            {/* Setting Prongs */}
+            <circle cx="16" cy="38" r="2" fill="#fef08a" />
+            <circle cx="24" cy="44" r="2" fill="#fef08a" />
+            <circle cx="32" cy="36" r="2.5" fill="#fef08a" />
+            <circle cx="40" cy="44" r="2" fill="#fef08a" />
+            <circle cx="48" cy="38" r="2" fill="#fef08a" />
+          </g>
+
+          {/* Brilliant Cut Royal Ceylon Sapphire Gemstone */}
+          <g filter={`url(#sph_glow_${uniqueId})`}>
+            {/* Main Diamond Pavilion */}
+            <polygon points="32,10 50,24 42,46 22,46 14,24" fill={`url(#sph_deep_${uniqueId})`} stroke="#93c5fd" strokeWidth="1.2" />
+            
+            {/* Crown Facets */}
+            <polygon points="32,10 40,24 32,32 24,24" fill="#60a5fa" opacity="0.65" />
+            <polygon points="32,10 50,24 40,24" fill="#93c5fd" opacity="0.5" />
+            <polygon points="32,10 14,24 24,24" fill="#3b82f6" opacity="0.7" />
+            
+            {/* Girdle and Pavilion Facets */}
+            <polygon points="24,24 32,32 32,46 22,46" fill="#1d4ed8" opacity="0.8" />
+            <polygon points="40,24 32,32 32,46 42,46" fill="#2563eb" opacity="0.85" />
+            <polygon points="14,24 24,24 22,46" fill="#1e3a8a" opacity="0.9" />
+            <polygon points="50,24 40,24 42,46" fill="#1e40af" opacity="0.85" />
+
+            {/* Specular White Facet Reflections */}
+            <polygon points="30,12 36,18 32,22 28,16" fill="#ffffff" opacity="0.85" />
+            <line x1="32" y1="10" x2="50" y2="24" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+            <circle cx="28" cy="20" r="1.8" fill="#ffffff" />
+          </g>
+        </svg>
+      );
+
     default:
       return (
         <svg viewBox="0 0 48 48" className={className} fill="none">

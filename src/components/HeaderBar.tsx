@@ -7,12 +7,9 @@ import {
   Volume2, 
   VolumeX, 
   BookOpen, 
-  Smartphone, 
-  Maximize2, 
   Sun, 
   Moon, 
   Sunset, 
-  FileCode2, 
   Settings,
   MapPin
 } from 'lucide-react';
@@ -29,11 +26,8 @@ interface HeaderBarProps {
   onToggleMute: () => void;
   onOpenNotebook: () => void;
   onOpenSettings: () => void;
-  onOpenAndroidCode: () => void;
   onGoToMap: () => void;
   currentScreen: ScreenState;
-  isPhoneFrame: boolean;
-  onTogglePhoneFrame: () => void;
 }
 
 export const formatRankRu = (rank: DetectiveRank): string => {
@@ -76,11 +70,8 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
   onToggleMute,
   onOpenNotebook,
   onOpenSettings,
-  onOpenAndroidCode,
   onGoToMap,
   currentScreen,
-  isPhoneFrame,
-  onTogglePhoneFrame,
 }) => {
   const getNextTimeOfDay = (): TimeOfDay => {
     if (timeOfDay === 'day') return 'sunset';
@@ -190,37 +181,6 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
         >
           <BookOpen className="w-4 h-4 text-amber-400" />
           <span className="text-xs hidden md:inline font-medium">Досье</span>
-        </button>
-
-        {/* Android Kotlin Source & Project Export */}
-        <button
-          onClick={() => {
-            soundEngine.playClick();
-            onOpenAndroidCode();
-          }}
-          id="btn-android-code"
-          className="px-2 py-1 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/70 border border-emerald-500/50 text-emerald-300 transition-colors flex items-center gap-1.5 text-xs font-semibold shadow-sm cursor-pointer"
-          title="Открыть исходный код Kotlin и проект Android Studio"
-        >
-          <FileCode2 className="w-3.5 h-3.5 text-emerald-400" />
-          <span className="hidden sm:inline">Android Kotlin</span>
-        </button>
-
-        {/* Phone Frame Toggle */}
-        <button
-          onClick={() => {
-            soundEngine.playClick();
-            onTogglePhoneFrame();
-          }}
-          id="btn-toggle-frame"
-          className="p-1.5 rounded-lg bg-slate-800/70 hover:bg-slate-700/80 border border-slate-700 text-slate-300 transition-colors cursor-pointer"
-          title={isPhoneFrame ? 'Переключить на полный экран' : 'Переключить в режим рамки смартфона Android'}
-        >
-          {isPhoneFrame ? (
-            <Maximize2 className="w-4 h-4 text-amber-300" />
-          ) : (
-            <Smartphone className="w-4 h-4 text-amber-300" />
-          )}
         </button>
 
         {/* Settings Modal */}
